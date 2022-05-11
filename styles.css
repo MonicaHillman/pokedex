@@ -38,6 +38,18 @@ body {
     text-align: center;
 }
 
+.filtro__lista {
+    display: flex;
+    justify-content: space-around;
+    margin: 2em 0;
+}
+
+.item__botao {
+    background-color: white;
+    border: 2px solid var(--cor-de-borda);
+    padding: 1em;
+    border-radius: 1em;
+}
 
 .filtro__busca,
 .filtro__botao {

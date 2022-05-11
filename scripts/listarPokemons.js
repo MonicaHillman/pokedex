@@ -16,10 +16,11 @@ function imprimePokemons(pokemons) {
 }
 
 
-async function listarPokemons(nome) {
-    const pokemon = await getPokemons(nome);
+async function listarPokemons(nome, endpoint) {
+    const pokemon = await getPokemons(nome, endpoint);
 
     if (pokemon.length) {
+        document.querySelector(".pokemon").innerHTML = "";
         pokemon.map(itens => { imprimePokemons(itens); })
     }
     else {
