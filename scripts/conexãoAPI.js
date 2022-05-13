@@ -4,26 +4,41 @@ async function getPokemons(nome, endpoint) {
     const API_GENERATION_URL = `${API_URL}/generation/`;
 
     if (nome == 'geração') {
+
         const buscaApiGeração = await fetch(API_GENERATION_URL + endpoint);
         const converteApiGeração = await buscaApiGeração.json();
         const consultaApiPokemon = await converteApiGeração.pokemon_species.map(async (pokemon) => {
             const teste = await fetch(API_POKEMON_URL + pokemon.name);
-            return await teste.json();
+            try {
+                return await teste.json();
+            } catch (err) {
+                console.log("deu erro no pokemon: " + err);
+            }
+
         });
         let resultado = await Promise.all(consultaApiPokemon);
         return resultado;
 
 
     } else {
-        const retornaPokemon = await fetch(API_POKEMON_URL + (endpoint || ""));
-        const convertePokemon = await retornaPokemon.json();
+        try {
+            const retornaPokemon = await fetch(API_POKEMON_URL + (endpoint || ""));
+            var convertePokemon = await retornaPokemon.json();
+        } catch {
+            console.log("Não existe pokemons com esse nome!");
+        }
 
         if (endpoint) {
             return convertePokemon;
         } else {
             const promises = await convertePokemon.results.map(async (pokemon) => {
                 const verificaPokemon = await fetch(pokemon.url);
-                return await verificaPokemon.json();
+                try {
+                    return await verificaPokemon.json();
+                }
+                catch (err) {
+                    console.log("erro no carregamento dos pokemons!");
+                }
             });
 
             let resultadosConvertidos = await Promise.all(promises);
