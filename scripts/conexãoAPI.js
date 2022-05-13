@@ -8,11 +8,15 @@ async function getPokemons(nome, endpoint) {
         const buscaApiGeração = await fetch(API_GENERATION_URL + endpoint);
         const converteApiGeração = await buscaApiGeração.json();
         const consultaApiPokemon = await converteApiGeração.pokemon_species.map(async (pokemon) => {
-            const teste = await fetch(API_POKEMON_URL + pokemon.name);
             try {
+                const teste = await fetch(API_POKEMON_URL + pokemon.name);
+
+                if (teste.status == 404) {
+                    throw new Error(`${pokemon.name} não encontrado`);
+                }
                 return await teste.json();
             } catch (err) {
-                console.log("deu erro no pokemon: " + err);
+                console.log(err);
             }
 
         });
