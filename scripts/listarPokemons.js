@@ -1,14 +1,15 @@
-import getPokemons from "./conexãoAPI.js";
+
+import { getGeracao } from "./conexãoAPI.js";
 
 function imprimePokemons(pokemons) {
     var elementoHTML = document.querySelector(".pokemon");
     var divNova = document.createElement("div");
     divNova.classList.add("card");
     divNova.innerHTML = `
-    <img src=${pokemons.sprites.front_default}>
-    <h2 class="card__titulo">${pokemons.name}</h1>
+    <img src=${pokemons.img}>
+    <h2 class="card__titulo">${pokemons.nome}</h1>
     <ul class="card__lista-tipos">
-        ${pokemons.types.map((tipos) =>
+        ${pokemons.tipo.map((tipos) =>
         `<li class="lista-tipos__item">${tipos.type.name}</li>`).join('')}
     </ul>
 `;
@@ -16,8 +17,8 @@ function imprimePokemons(pokemons) {
 }
 
 
-async function listarPokemons(nome, endpoint) {
-    const pokemon = await getPokemons(nome, endpoint);
+async function listarPokemons(endpoint) {
+    const pokemon = await getGeracao(endpoint.value);
 
     if (pokemon.length) {
         document.querySelector(".pokemon").innerHTML = "";

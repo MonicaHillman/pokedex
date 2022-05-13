@@ -2,7 +2,7 @@ import listarPokemons from "./scripts/listarPokemons.js";
 
 function iniciarBusca() {
     var nome = document.getElementById('nome-pokemon').value;
-    return listarPokemons('pokemon', nome);
+    return listarPokemons(nome);
 }
 
 function filtroGeração(botao) {
@@ -17,11 +17,11 @@ function filtroGeração(botao) {
         { name: 'botao-8g', value: '8' }
     ];
 
-    const geração = botoes.find(bt => bt.name == botao).value;
-    return listarPokemons('geração', geração)
+    const geração = botoes.find(bt => bt.name == botao);
+    return listarPokemons(geração)
 }
 
-listarPokemons('pokemon');
+listarPokemons({ name: 'botao-1g', value: '1' });
 
 const realizarBusca = document.getElementById('buscar-pokemon')
 realizarBusca.addEventListener('click', iniciarBusca);
